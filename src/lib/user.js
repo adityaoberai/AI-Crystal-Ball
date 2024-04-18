@@ -22,7 +22,7 @@ const createUser = () => {
 
     function login() {
         if(!isBrowser) return;
-        account.createOAuth2Session('github', `http://localhost:5173/app`, `http://${window.location.hostname}`);
+        account.createOAuth2Session('github', `https://${window.location.hostname}/app`, `https://${window.location.hostname}`);
     }
 
     function logout() {
