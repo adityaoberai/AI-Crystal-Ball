@@ -24,6 +24,7 @@
 	},
 	"type": "module",
 	"dependencies": {
-		"appwrite": "^13.0.2"
+		"appwrite": "^13.0.2",
+		"openai": "^4.37.1"
 	}
 }
