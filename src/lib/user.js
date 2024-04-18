@@ -1,5 +1,6 @@
 import { writable } from "svelte/store";
 import { account } from "./appwrite";
+import { goto } from "$app/navigation";
 
 const isBrowser = typeof window !== 'undefined';
 
@@ -12,6 +13,8 @@ const createUser = () => {
             store.set(await account.get());
         } catch (error) {
             store.set(null);
+            alert('Please log in to continue');
+            goto('/');
         }
     } 
     
