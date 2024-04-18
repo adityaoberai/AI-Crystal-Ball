@@ -1,0 +1,62 @@
+:root {
+    /* Primary colors */
+    --color-primary-dark: #3a2c51; /* Deep purple */
+    --color-primary-light: #25274d; /* Midnight blue */
+
+    /* Secondary colors */
+    --color-secondary-gold: #c0b283;
+    --color-secondary-silver: #b5b5b7;
+
+    /* Tertiary colors */
+    --color-tertiary-black: #0e0c1b;
+    --color-tertiary-gray: #464866;
+
+    /* Utility colors */
+    --color-text: #ffffff;
+    --color-background: #1c1c3c;
+}
+
+body {
+    font-family: 'Garamond', serif;
+    color: var(--color-text);
+    background-color: var(--color-background);
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Times', serif;
+}
+
+.button-text, .label, .input-text {
+    font-family: 'Arial', sans-serif;
+}
+
+button {
+    background-color: var(--color-secondary-gold);
+    border: none;
+    color: var(--color-text);
+    padding: 0.625rem 1.25rem; /* equivalent to 10px 20px */
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 1rem;
+    border-radius: 3.125rem; /* very round */
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+button:hover {
+    background-color: var(--color-secondary-silver);
+    transform: translateY(-0.125rem);
+}
+
+@keyframes glow {
+    0%, 100% {
+        box-shadow: 0 0 0.3125rem rgba(192, 192, 192, 0.5);
+    }
+    50% {
+        box-shadow: 0 0 1.25rem rgba(192, 192, 192, 0.8);
+    }
+}
+
+.glow {
+    animation: glow 2s infinite;
+}

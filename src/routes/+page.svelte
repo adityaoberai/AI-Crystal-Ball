@@ -13,4 +13,4 @@
 
 <h1>AI Crystal Ball</h1>
 
-<button on:click={login}>Login with GitHub</button>
+<button class="glow" on:click={login}>Login with GitHub</button>
