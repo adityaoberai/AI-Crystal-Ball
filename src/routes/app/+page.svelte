@@ -70,7 +70,7 @@
 
     function shareTwitter() {
         html2canvas(document.querySelector('.fortuneMessage')).then(async (canvas) => {
-            let tweet = encodeURI("Just got my future from the AI Crystal Ball!\n\nTry it out: ai-crystal-ball.vercel.app\n\nBuilt with @appwrite x @sveltejs x @OpenAI\n\nView my destiny:\n")
+            let tweet = encodeURI("Just got my future from the AI Crystal Ball!\n\nTry it out: https://aicrystalball.oberai.dev\n\nBuilt with @appwrite x @sveltejs x @OpenAI\n\nView my destiny:\n")
             let image = await images.upload($user.$id, canvas.toDataURL('image/png'));
             console.log(image)
             let url = images.view(image.$id); console.log(url)
