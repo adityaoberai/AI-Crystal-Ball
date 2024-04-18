@@ -3,6 +3,8 @@
     import { db } from '$lib/databases';
     import { github } from '$lib/github';
 	import { onMount } from 'svelte';
+    import { images } from '$lib/storage';
+    import html2canvas from 'html2canvas';
     import crystalball from '$lib/assets/crystalball.png';
 
     let fortune = '';
@@ -43,13 +45,13 @@
 				githubData
 			})
 		})
+        fortuneLoading = 'complete';
         let fortuneRequestBody = await fortuneRequest.json();
         if(fortuneRequest.status == 200){
             fortune += `${fortuneRequestBody.fortune}`;
         } else {
             fortune += `Error occured:\n\n${fortuneRequestBody.error}`;
         }
-        fortuneLoading = 'complete';
     }
 
     function resetFortune() {
@@ -58,11 +60,22 @@
     }
 
     function saveImage() {
-        alert('This is just a test function');
+        html2canvas(document.querySelector('.fortuneMessage')).then(canvas => {
+            let link = document.createElement('a');
+            link.download = 'fortune.png';
+            link.href = canvas.toDataURL('image/png');
+            link.click();
+        });
     }
 
     function shareTwitter() {
-        alert('This is just a test function');
+        html2canvas(document.querySelector('.fortuneMessage')).then(async (canvas) => {
+            let tweet = encodeURI("Just got my future from the AI Crystal Ball!\n\nTry it out: ai-crystal-ball.vercel.app\n\nBuilt with @appwrite x @openai\n\nView my destiny:\n")
+            let image = await images.upload($user.$id, canvas.toDataURL('image/png'));
+            console.log(image)
+            let url = images.view(image.$id); console.log(url)
+            window.open(`https://twitter.com/intent/tweet?text=${tweet}&url=${encodeURI(url)}`, '_blank');
+        });
     }
 
     async function initCrystalBall() {
@@ -102,13 +115,20 @@
                 <img class="ballglow" src={crystalball} alt="Crystal Ball">
                 <button class="ballbutton glow" on:click={getFortune}>Reading your future...</button>                
             {:else if fortuneLoading === 'complete'}
-            <p>{fortune}</p>
-            <div class="fortuneButtons">
-                <button class="saveButton" on:click={saveImage}>Save Image</button>
-                <button class="twitterButton" on:click={shareTwitter}>Share on Twitter</button>
-                <button class="resetButton" on:click={resetFortune}>Want a new fortune?</button>
-            </div>
-        {/if}
+                <div class="fortune">
+                    <div class="fortuneMessage">
+                        <h1>Five Years from Today</h1>
+                        <div class="fortuneMessageBox">
+                            <p>{fortune}</p>
+                        </div>
+                    </div>
+                    <div class="fortuneButtons">
+                        <button class="saveButton" on:click={saveImage}>Save Image</button>
+                        <button class="twitterButton" on:click={shareTwitter}>Share on Twitter</button>
+                        <button class="resetButton" on:click={resetFortune}>Want a new fortune?</button>
+                    </div>
+                </div>
+            {/if}
         </div>
     </div>
 {/if}
@@ -153,10 +173,11 @@
     }
 
     .ballbutton {
-        padding: 2rem;
+        padding: 1.8rem 2rem;
         font-size: 1.5rem;
         border-bottom-left-radius: 0;
         border-bottom-right-radius: 0;
+        font-weight: bolder;
     }
 
     .spinner {
@@ -166,12 +187,6 @@
         border-radius: 50%;
         border-left-color: #09f;
         animation: spin 1s infinite linear;
-    }
-
-    .fortuneButtons {
-        display: flex;
-        flex-direction: row;
-        gap: 1rem;
     }
 
     @keyframes spin {
@@ -194,5 +209,57 @@
 
     .ballglow {
         animation: ballglow 2s infinite;
+    }
+
+    .fortune {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: 100%;
+        gap: 2rem;
+    }
+
+    .fortuneButtons {
+        display: flex;
+        flex-direction: row;
+        gap: 1rem;
+    }
+
+    .fortuneMessage {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 1rem;
+        padding: 2rem 1rem;
+        border: 1px solid var(--color-tertiary-black);
+        width: 80%;
+        height: auto;
+        background-color: var(--color-secondary-gold);
+        border-radius: 1rem;
+    }
+
+    .fortuneMessage h1 {
+        margin: 0;
+    }
+
+    .fortuneMessageBox {
+        display: flex;
+        text-align: center;
+        margin: 0 auto;
+        border: 1px solid var(--color-tertiary-black);
+        width: 90%;
+        height: auto;
+        background-color: #ffffff;
+        border-radius: 3.125rem;
+        font-size: 1.2rem;
+    }
+
+    .fortuneMessageBox p {
+        width: 80%;
+        color: var(--color-tertiary-black);
+        margin: 1rem auto;
     }
 </style>

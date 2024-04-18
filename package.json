@@ -25,6 +25,7 @@
 	"type": "module",
 	"dependencies": {
 		"appwrite": "^13.0.2",
+		"html2canvas": "^1.4.1",
 		"openai": "^4.37.1"
 	}
 }
