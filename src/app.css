@@ -16,10 +16,16 @@
     --color-background: #1c1c3c;
 }
 
+html {
+    min-height: 100vh;
+}
+
 body {
     font-family: 'Garamond', serif;
     color: var(--color-text);
     background-color: var(--color-background);
+    min-height: 100vh;
+    margin: 0;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -38,7 +44,7 @@ button {
     text-align: center;
     text-decoration: none;
     display: inline-block;
-    font-size: 1rem;
+    font-size: 1.2rem;
     border-radius: 3.125rem; /* very round */
     transition: background-color 0.3s, transform 0.3s;
 }

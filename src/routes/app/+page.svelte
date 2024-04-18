@@ -150,9 +150,8 @@
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        padding: 2rem;
         gap: 1rem;
-        height: 100vh;
+        min-height: 100vh;
     }
 
     .crystalball {
@@ -162,6 +161,7 @@
         justify-content: center;
         width: 80%;
         height: 80%;
+        margin: auto;
     }
 
     .crystalball img {
@@ -216,9 +216,11 @@
         flex-direction: column;
         align-items: center;
         justify-content: center;
+        text-align: center;
         width: 100%;
         height: 100%;
-        gap: 2rem;
+        gap: 3rem;
+        padding: 5rem 0;
     }
 
     .fortuneButtons {
@@ -235,7 +237,8 @@
         gap: 1rem;
         padding: 2rem 1rem;
         border: 1px solid var(--color-tertiary-black);
-        width: 80%;
+        width: 35%;
+        min-height: 5%;
         height: auto;
         background-color: var(--color-secondary-gold);
         border-radius: 1rem;
@@ -254,12 +257,42 @@
         height: auto;
         background-color: #ffffff;
         border-radius: 3.125rem;
-        font-size: 1.2rem;
     }
 
     .fortuneMessageBox p {
         width: 80%;
         color: var(--color-tertiary-black);
         margin: 1rem auto;
+        font-size: 1.5rem;
+    }
+
+    @media (max-width: 768px) {
+        .crystalball img {
+            border-radius: 50%;
+            max-width: 90%;
+            width: auto;
+            max-height: 70%;
+            height: auto;
+        }
+
+        .ballbutton {
+            padding: 1.5rem;
+            font-size: 1rem;
+            max-width: 80%;
+            font-weight: bolder;
+        }
+
+        .fortuneMessage {
+            width: 85%;
+        }
+
+        .fortuneMessageBox p {
+            font-size: 1.2rem;
+        }
+
+        .fortuneButtons {
+            flex-direction: column;
+            gap: 1rem;
+        }
     }
 </style>
