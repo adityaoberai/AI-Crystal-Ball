@@ -4,6 +4,7 @@
     import { github } from '$lib/github';
 	import { onMount } from 'svelte';
     import { images } from '$lib/storage';
+    import { goto } from '$app/navigation';
     import html2canvas from 'html2canvas';
     import crystalball from '$lib/assets/crystalball.png';
 
