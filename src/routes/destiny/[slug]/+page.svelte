@@ -4,11 +4,13 @@
     let fortune = data.destiny.destiny;
     let username = data.destiny.username;
 
-    let ogImageUrl = `https://aicrystalball.oberai.dev/api/og/?username=${username}&destiny=${fortune}`;
+    let ogImageUrl = `http://localhost:5173/api/og/?username=${username}&destiny=${fortune}`;
 
     function discoverDestiny() {
         window.open('https://aicrystalball.oberai.dev', '_self');
     }
+
+    
 </script>
 
 <svelte:head>
