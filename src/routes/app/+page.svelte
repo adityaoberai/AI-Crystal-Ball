@@ -3,7 +3,6 @@
     import { db } from '$lib/databases';
     import { github } from '$lib/github';
 	import { onMount } from 'svelte';
-    import { images } from '$lib/storage';
     import { goto } from '$app/navigation';
     import html2canvas from 'html2canvas';
     import crystalball from '$lib/assets/crystalball.png';
@@ -73,10 +72,9 @@
     function shareTwitter() {
         html2canvas(document.querySelector('.fortuneMessage')).then(async (canvas) => {
             let destiny = await db.addDestiny(userData.username, fortune);
-            console.log(destiny)
-            let tweet = encodeURI('Just discovered my developer destiny from the AI Crystal Ball!\n\nCheck it out!');
             let url = `https://aicrystalball.oberai.dev/destiny/${destiny.$id}`;
-            window.open(`https://twitter.com/intent/tweet?text=${tweet}&url=${encodeURI(url)}`, '_blank');
+            let tweet = encodeURI(`Just discovered my developer destiny from the AI Crystal Ball! 🤩\n\n🔗 Check it out: ${url}\n\nBuilt with @appwrite X @openai 🧑‍💻`);
+            window.open(`https://twitter.com/intent/tweet?text=${tweet}`, '_blank');
         });
     }
 
@@ -153,6 +151,7 @@
         flex-direction: column;
         align-items: center;
         justify-content: center;
+        text-align: center;
         gap: 1rem;
         padding: 2rem 1rem;
         border: 1px solid var(--color-tertiary-black);
@@ -252,7 +251,8 @@
 
     @media (max-width: 768px) {
         .loadingContainer{
-            max-width: 90%;
+            max-width: 80%;
+            width: auto;
             margin: 0 auto;
         }
 

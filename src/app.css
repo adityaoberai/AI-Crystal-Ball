@@ -136,8 +136,13 @@ button:hover {
 }
 
 @media (max-width: 768px) {
+    .fortune{
+        width: 95vw;
+    }
+
     .fortuneMessage {
-        width: 95%;
+        max-width: 90%;
+        padding: 2rem 0;
     }
 
     .fortuneMessageBox p {
