@@ -18,9 +18,10 @@
 <div class="mainContainer">
     <Night />
     <h1>AI Crystal Ball</h1>
+    <h2>Find your developer destiny!</h2>
     <img class="glow" src={crystalBall} alt="crystal ball">
     {#if data.loggedIn}
-        <button class="glow" on:click={moveForward}>Find your destiny</button>
+        <button class="glow" on:click={moveForward}>Reveal your destiny</button>
     {:else}
         <button class="glow" on:click={login}>
             <span class="icon-github"></span>Login with GitHub
@@ -41,6 +42,11 @@
     
     h1 {
         font-size: 3.5rem;
+        margin: 0;
+    }
+
+    h2 {
+        font-size: 2rem;
         margin: 0;
     }
 

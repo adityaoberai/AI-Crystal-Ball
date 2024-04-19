@@ -13,6 +13,8 @@
     let fortuneLoading = '';
     let userData = {};
 
+    export let data;
+
     async function getTopFiveLanguages(username, token) {
         let languageUsage = {};
         
@@ -94,6 +96,9 @@
     }
 
     onMount(async () => {
+        if(!data.loggedIn) {
+            goto('/');
+        }
         let userId = $user.$id;
         await initCrystalBall(userId);
     })
@@ -114,7 +119,7 @@
         <div class="crystalball">
             {#if fortuneLoading === ''}
                 <img src={crystalball} alt="Crystal Ball">
-                <button class="ballbutton" on:click={getFortune}>Reveal your destiny!</button>
+                <button class="ballbutton" on:click={getFortune}>Tap and reveal your destiny!</button>
             {:else if fortuneLoading === 'loading'}
                 <img class="ballglow" src={crystalball} alt="Crystal Ball">
                 <button class="ballbutton glow" on:click={getFortune}>Reading your future...</button>                

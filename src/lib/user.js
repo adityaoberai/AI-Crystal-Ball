@@ -10,21 +10,14 @@ const createUser = () => {
     async function init() {
         try {
             store.set(await account.get());
+            return true;
         } catch (error) {
             store.set(null);
+            return false;
         }
     } 
     
     init();
-
-    async function isLoggedIn() {
-        try {
-            await account.get();
-            return true;
-        } catch(err) {
-            return false;
-        }
-    }
 
     function login() {
         if(!isBrowser) return;
@@ -39,7 +32,6 @@ const createUser = () => {
     return {
         subscribe: store.subscribe,
         init,
-        isLoggedIn,
         login,
         getSession
     }
