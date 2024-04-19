@@ -23,7 +23,6 @@
     <meta property="og:image:secure_url" content={ogImageUrl} />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-
 </svelte:head>
 
 <div class="mainContainer">
