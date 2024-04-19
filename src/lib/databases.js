@@ -1,8 +1,8 @@
-import { Permission, Role } from "appwrite";
+import { Permission, Role, ID } from "appwrite";
 import { databases } from "./appwrite";
 
 export const db = {
-    get: async(documentId) => {
+    getUserData: async(documentId) => {
         try{
             return await databases.getDocument(
                 "crystalball",
@@ -13,7 +13,8 @@ export const db = {
             return false;
         }
     },
-    add: async(userId, username, followers, following, languages) => {
+
+    addUserData: async(userId, username, followers, following, languages) => {
         return await databases.createDocument(
             "crystalball",
             "githubData",
@@ -28,5 +29,32 @@ export const db = {
                 Permission.write(Role.user(userId)), Permission.read(Role.user(userId))
             ]
         )
+    },
+
+    addDestiny: async(username, destiny) => {
+        return await databases.createDocument(
+            'crystalball',
+            'destiny',
+            ID.unique(),
+            {
+                username,
+                destiny
+            }
+        )
+    },
+    
+    getDestiny: async(documentId) => {
+        try{
+            return await databases.getDocument(
+                'crystalball',
+                'destiny',
+                documentId
+            );
+        } catch(err){
+            return {
+                username: 'Not found',
+                destiny: 'Not found'
+            }
+        }
     }
 };

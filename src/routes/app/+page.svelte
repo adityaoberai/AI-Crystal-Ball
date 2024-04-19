@@ -38,7 +38,7 @@
 
     async function getFortune() {
         fortuneLoading = 'loading';
-        const fortuneRequest = await fetch('/app/fortune', {
+        const fortuneRequest = await fetch('/api/fortune', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json'
@@ -72,16 +72,16 @@
 
     function shareTwitter() {
         html2canvas(document.querySelector('.fortuneMessage')).then(async (canvas) => {
-            let tweet = encodeURI("Just got my future from the AI Crystal Ball!\n\nTry it out: https://aicrystalball.oberai.dev\n\nBuilt with @appwrite x @sveltejs x @OpenAI\n\nView my destiny:\n")
-            let image = await images.upload($user.$id, canvas.toDataURL('image/png'));
-            console.log(image)
-            let url = images.view(image.$id); console.log(url)
+            let destiny = await db.addDestiny(userData.username, fortune);
+            console.log(destiny)
+            let tweet = encodeURI('Just discovered my developer destiny from the AI Crystal Ball!\n\nCheck it out!');
+            let url = `https://aicrystalball.oberai.dev/destiny/${destiny.$id}`;
             window.open(`https://twitter.com/intent/tweet?text=${tweet}&url=${encodeURI(url)}`, '_blank');
         });
     }
 
     async function initCrystalBall(userId) {
-        userData = await db.get(userId);
+        userData = await db.getUserData(userId);
         if(userData === false){
             const session = await user.getSession();
             const githubToken = session.providerAccessToken;
@@ -91,7 +91,7 @@
             loadingMessage = `Received user data ${githubUsername} from GitHub`;
 
             let languages = await getTopFiveLanguages(githubUsername, githubToken);
-            userData = await db.add($user.$id, githubUsername, githubUser.followers, githubUser.following, languages);
+            userData = await db.addUserData($user.$id, githubUsername, githubUser.followers, githubUser.following, languages);
         }
         githubLoading = false;
     }
@@ -146,16 +146,6 @@
 <style>
     p {
         white-space: pre-line;
-    }
-
-    .mainContainer {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        gap: 1rem;
-        min-height: 100vh;
-        width: 100vw;
     }
 
     .loadingContainer {
@@ -260,62 +250,6 @@
         animation: ballglow 2s infinite;
     }
 
-    .fortune {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        text-align: center;
-        width: 100%;
-        height: 100%;
-        gap: 3rem;
-        padding: 5rem 0;
-    }
-
-    .fortuneButtons {
-        display: flex;
-        flex-direction: row;
-        gap: 1rem;
-    }
-
-    .fortuneMessage {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        gap: 1rem;
-        padding: 2rem 1rem;
-        border: 1px solid var(--color-tertiary-black);
-        max-width: 60%;
-        min-height: 10%;
-        height: auto;
-        background-color: var(--color-secondary-gold);
-        border-radius: 1rem;
-        margin: 0 auto;
-    }
-
-    .fortuneMessage h1 {
-        margin: 0;
-    }
-
-    .fortuneMessageBox {
-        display: flex;
-        text-align: center;
-        margin: 0 auto;
-        border: 1px solid var(--color-tertiary-black);
-        width: 90%;
-        height: auto;
-        background-color: var(--color-utility-light);
-        border-radius: 3.125rem;
-    }
-
-    .fortuneMessageBox p {
-        width: 80%;
-        color: var(--color-tertiary-black);
-        margin: 1rem auto;
-        font-size: 1.5rem;
-    }
-
     @media (max-width: 768px) {
         .loadingContainer{
             max-width: 90%;
@@ -335,19 +269,6 @@
             font-size: 1rem;
             max-width: 80%;
             font-weight: bolder;
-        }
-
-        .fortuneMessage {
-            width: 95%;
-        }
-
-        .fortuneMessageBox p {
-            font-size: 1rem;
-        }
-
-        .fortuneButtons {
-            flex-direction: column;
-            gap: 1rem;
         }
     }
 </style>
