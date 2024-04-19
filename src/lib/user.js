@@ -8,25 +8,27 @@ const createUser = () => {
     const store = writable(null);
 
     async function init() {
-        if(!isBrowser) return;
         try {
             store.set(await account.get());
         } catch (error) {
             store.set(null);
-            alert('Please log in to continue');
-            goto('/');
         }
     } 
     
     init();
 
+    async function isLoggedIn() {
+        try {
+            await account.get();
+            return true;
+        } catch(err) {
+            return false;
+        }
+    }
+
     function login() {
         if(!isBrowser) return;
         account.createOAuth2Session('github', `https://${window.location.hostname}/app`, `https://${window.location.hostname}`);
-    }
-
-    function logout() {
-        account.deleteSession('current');
     }
 
     async function getSession() {
@@ -37,8 +39,8 @@ const createUser = () => {
     return {
         subscribe: store.subscribe,
         init,
+        isLoggedIn,
         login,
-        logout,
         getSession
     }
 }
