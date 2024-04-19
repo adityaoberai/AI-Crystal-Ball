@@ -15,11 +15,15 @@
 
 <svelte:head>
     <title>{username}'s Destiny</title>
-    <meta name="description" content={fortune}>
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:creator" content="@adityaoberai1" />
+    <meta property="twitter:image" content={ogImageUrl} />
+    <meta name="description" content="Generate your developer destiny through the AI Crystal ball today">
     <meta property="og:image" content={ogImageUrl} />
     <meta property="og:image:secure_url" content={ogImageUrl} />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
+
 </svelte:head>
 
 <div class="mainContainer">
