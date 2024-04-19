@@ -237,11 +237,6 @@
         font-weight: bolder;
     }
 
-    .loading {
-        width: 1rem;
-        height: 1rem;
-    }
-
     @keyframes spin {
         0% {
             transform: rotate(0deg);
@@ -295,6 +290,7 @@
         height: auto;
         background-color: var(--color-secondary-gold);
         border-radius: 1rem;
+        margin: 0 auto;
     }
 
     .fortuneMessage h1 {
@@ -320,6 +316,11 @@
     }
 
     @media (max-width: 768px) {
+        .loadingContainer{
+            max-width: 90%;
+            margin: 0 auto;
+        }
+
         .crystalball img {
             border-radius: 50%;
             max-width: 90%;
@@ -336,11 +337,11 @@
         }
 
         .fortuneMessage {
-            width: 85%;
+            width: 95%;
         }
 
         .fortuneMessageBox p {
-            font-size: 1.2rem;
+            font-size: 1rem;
         }
 
         .fortuneButtons {
