@@ -34,7 +34,6 @@
     }
 
     async function getFortune() {
-        const githubData=`GitHub username: ${userData.username}\nFollowers: ${userData.followers}\nFollowing: ${userData.following}\nTop 5 languages:\n${userData.languages.join(',')}`;
         fortuneLoading = 'loading';
         const fortuneRequest = await fetch('/app/fortune', {
 			method: 'POST',
@@ -42,7 +41,7 @@
 				'Content-Type': 'application/json'
 			},
 			body: JSON.stringify({
-				githubData
+				userData
 			})
 		})
         fortuneLoading = 'complete';
@@ -78,8 +77,8 @@
         });
     }
 
-    async function initCrystalBall() {
-        userData = await db.get($user.$id);
+    async function initCrystalBall(userId) {
+        userData = await db.get(userId);
         if(userData === false){
             const session = await user.getSession();
             const githubToken = session.providerAccessToken;
@@ -95,18 +94,23 @@
     }
 
     onMount(async () => {
-        await user.init();
-        await initCrystalBall();
+        let userId = $user.$id;
+        await initCrystalBall(userId);
     })
 </script>
 
 {#if githubLoading}
-    <div class="loadingContainer">
-        <div class="spinner"></div>
-        <p>{loadingMessage}</p>
+    <div class="mainContainer">
+        <div class="loadingContainer">
+            <h1>Loading your Profile</h1>
+            <div class="loadingContainerBox">
+                <img class="ballglow" src={crystalball} alt="Crystal Ball">
+                <p>{loadingMessage}</p>
+            </div>
+        </div>
     </div>
 {:else}
-    <div class="crystalballContainer">
+    <div class="crystalballContainer mainContainer">
         <div class="crystalball">
             {#if fortuneLoading === ''}
                 <img src={crystalball} alt="Crystal Ball">
@@ -138,20 +142,68 @@
         white-space: pre-line;
     }
 
-    .loadingContainer {
-        display: flex;
-        align-items: center;
-        padding: 2rem;
-        gap: 1rem;
-    }
-
-    .crystalballContainer {
+    .mainContainer {
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
         gap: 1rem;
         min-height: 100vh;
+        width: 100vw;
+    }
+
+    .loadingContainer {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 1rem;
+        padding: 2rem 1rem;
+        border: 1px solid var(--color-tertiary-black);
+        background-color: var(--color-secondary-gold);
+        border-radius: 1rem;
+    }
+
+    .loadingContainer h1 {
+        margin: 0;
+        padding: 0 1rem;
+    }
+
+    .loadingContainerBox {
+        display: flex;
+        flex-direction: row;
+        text-align: center;
+        justify-content: center;
+        align-items: center;
+        margin: 0 auto;
+        padding: 0 1rem;
+        border: 1px solid var(--color-tertiary-black);
+        height: auto;
+        background-color: var(--color-utility-light);
+        border-radius: 2rem;
+        gap: 1rem;
+    }
+
+    @keyframes loadingball {
+        0%, 100% {
+            opacity: 1;
+        }
+        50% {
+            opacity: 0.3;
+        }
+    }
+
+    .loadingContainerBox img {
+        border-radius: 50%;
+        width: 2rem;
+        height: 2rem;
+        animation: loadingball 2s linear infinite;
+    }
+
+    .loadingContainerBox p {
+        color: var(--color-tertiary-black);
+        margin: 1rem auto;
+        font-size: 1.5rem;
     }
 
     .crystalball {
@@ -180,13 +232,9 @@
         font-weight: bolder;
     }
 
-    .spinner {
-        border: 4px solid rgba(0, 0, 0, 0.1);
+    .loading {
         width: 1rem;
         height: 1rem;
-        border-radius: 50%;
-        border-left-color: #09f;
-        animation: spin 1s infinite linear;
     }
 
     @keyframes spin {
@@ -203,7 +251,7 @@
             box-shadow: 0 0 1rem rgba(192, 192, 192, 0.5);
         }
         50% {
-            box-shadow: 0 0 3rem rgba(192, 192, 192, 0.8);
+            box-shadow: 0 0 3rem rgba(192, 192, 192, 0.9);
         }
     }
 
@@ -237,8 +285,8 @@
         gap: 1rem;
         padding: 2rem 1rem;
         border: 1px solid var(--color-tertiary-black);
-        width: 35%;
-        min-height: 5%;
+        max-width: 60%;
+        min-height: 10%;
         height: auto;
         background-color: var(--color-secondary-gold);
         border-radius: 1rem;
@@ -255,7 +303,7 @@
         border: 1px solid var(--color-tertiary-black);
         width: 90%;
         height: auto;
-        background-color: #ffffff;
+        background-color: var(--color-utility-light);
         border-radius: 3.125rem;
     }
 

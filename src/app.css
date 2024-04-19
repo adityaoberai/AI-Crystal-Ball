@@ -12,8 +12,8 @@
     --color-tertiary-gray: #464866;
 
     /* Utility colors */
-    --color-text: #ffffff;
-    --color-background: #1c1c3c;
+    --color-utility-light: #ffffff; /* used for headings */
+    --color-utility-dark: #1c1c3c; /* used for the main background */
 }
 
 html {
@@ -22,8 +22,9 @@ html {
 
 body {
     font-family: 'Garamond', serif;
-    color: var(--color-text);
-    background-color: var(--color-background);
+    color: var(--color-utility-light);
+    background: rgb(25,25,28);
+    background: linear-gradient(180deg, rgba(25,25,28,0.95) 0%, rgba(25,25,28,1) 5%, rgba(28,28,60,1) 30%, rgba(28,28,60,1) 100%);
     min-height: 100vh;
     margin: 0;
 }
@@ -39,7 +40,7 @@ h1, h2, h3, h4, h5, h6 {
 button {
     background-color: var(--color-secondary-gold);
     border: none;
-    color: var(--color-text);
+    color: var(--color-utility-light);
     padding: 0.625rem 1.25rem; /* equivalent to 10px 20px */
     text-align: center;
     text-decoration: none;

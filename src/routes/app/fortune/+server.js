@@ -8,9 +8,11 @@ export async function POST({ request }) {
 
         const openai = new OpenAI({
             apiKey: env.SECRET_OPENAI_API_KEY
-          });
+        });
+
+        const userData = requestBody.userData;
       
-        const prompt = `You have the following data on a developer from their GitHub account:\n\n${requestBody.githubData}\n\nBased on this data, create a humourous, realistic prediction to lightly roast the individual about what they'll be doing in 5 years from now. Do not explicitly include their GitHub data in the final message.`;
+        const prompt = `You have the following data on a developer from their GitHub account:\n\nGitHub username: ${userData.username}\nFollowers: ${userData.followers}\nFollowing: ${userData.following}\nTop 5 languages:\n${userData.languages.join(',')}\n\nBased on this data, create a humourous, realistic prediction to lightly roast the individual about what they'll be doing in 5 years from now. Do not explicitly include their GitHub data in the final message.`;
         const response = await openai.chat.completions.create({
         model: 'gpt-4',
         max_tokens: 250,

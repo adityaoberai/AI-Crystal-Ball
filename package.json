@@ -24,6 +24,7 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"@appwrite.io/pink": "^0.14.0",
 		"appwrite": "^13.0.2",
 		"html2canvas": "^1.4.1",
 		"openai": "^4.37.1"
