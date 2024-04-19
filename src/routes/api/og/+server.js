@@ -36,7 +36,8 @@ export async function GET ({ url }) {
 
     return new Response(image.asPng(), {
         headers: {
-            'content-type': 'image/png'
+            'content-type': 'image/png',
+            'Access-Control-Allow-Origin': '*'
         }
     });
 };
