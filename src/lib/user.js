@@ -8,7 +8,8 @@ const createUser = () => {
     const store = writable(null);
 
     async function init() {
-        try {
+        try 
+            if(!isBrowser) return;
             store.set(await account.get());
             return true;
         } catch (error) {
