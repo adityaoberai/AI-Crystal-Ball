@@ -1,17 +1,10 @@
 <script>
     import { user } from '$lib/user';
-    import { goto } from '$app/navigation';
     import Night from '../components/Night.svelte';
     import crystalBall from '$lib/assets/crystalball.png';
 
-    export let data;
-
     function login() {
         user.login();
-    }
-
-    function moveForward() {
-        goto('/app')
     }
 </script>
 
@@ -29,13 +22,9 @@
     <h1>AI Crystal Ball</h1>
     <h2>Find your developer destiny!</h2>
     <img class="glow" src={crystalBall} alt="crystal ball">
-    {#if data.loggedIn}
-        <button class="glow" on:click={moveForward}>Reveal your destiny</button>
-    {:else}
-        <button class="glow" on:click={login}>
-            <span class="icon-github"></span>Login with GitHub
-        </button>
-    {/if}
+    <button class="glow" on:click={login}>
+        <span class="icon-github"></span>Login with GitHub
+    </button>
 </div>
 
 <style>
