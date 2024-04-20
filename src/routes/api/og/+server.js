@@ -9,8 +9,20 @@ const fontFile = await fetch('https://og-playground.vercel.app/inter-latin-ext-7
 const fontData = await fontFile.arrayBuffer();
 
 export async function GET ({ url }) {
-    let destiny = url.searchParams.get('destiny') || 'Not found';
-    let username = url.searchParams.get('username') || 'Not found';
+    let destiny = url.searchParams.get('destiny') || false;
+    let username = url.searchParams.get('username') || false;
+
+    if (!destiny || !username) {
+        let ogImage = await fetch('https://aicrystalball.oberai.dev/og.png');
+        let ogImageBuffer = await ogImage.arrayBuffer();
+        return new Response(ogImageBuffer, {
+            headers: {
+                'Cache-Control': 'max-age=31536000',
+                'Content-Type': 'image/png',
+                'Access-Control-Allow-Origin': '*'
+            }
+        });
+    }
 
     const html = `<div width=1200 height=630 style="background: #c0b283; width: 100%; height: 100%; text-align: center; justify-content: center; align-items: center; display: flex; flex-direction: column;"><h1 style= "fontSize: 60; color: #ffffff">${username}'s Destiny</h1><div style="background: white; padding: 50px 50px; border-radius: 40px; border: 1px solid black; width: 80%; height: 80%; text-align: center; justify-content: center; align-items: center; display: flex; flex-direction: column"><h2 style="fontSize: 30; margin: 0">${destiny}...</h2></div></div>`;
     const svg = await satori(toReactElement(html), {
@@ -36,7 +48,8 @@ export async function GET ({ url }) {
 
     return new Response(image.asPng(), {
         headers: {
-            'content-type': 'image/png',
+            'Cache-Control': 'max-age=31536000',
+            'Content-Type': 'image/png',
             'Access-Control-Allow-Origin': '*'
         }
     });
