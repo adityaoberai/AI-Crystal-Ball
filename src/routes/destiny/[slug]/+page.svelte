@@ -20,7 +20,6 @@
     <meta property="twitter:image" content={ogImageUrl} />
     <meta name="description" content="Find your developer destiny!">
     <meta property="og:image" content={ogImageUrl} />
-    <meta property="og:image:secure_url" content={ogImageUrl} />
 </svelte:head>
 
 <div class="mainContainer">

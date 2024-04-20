@@ -13,8 +13,6 @@
     let fortuneLoading = '';
     let userData = {};
 
-    export let data;
-
     async function getTopFiveLanguages(username, token) {
         let languageUsage = {};
         
@@ -95,7 +93,9 @@
     }
 
     onMount(async () => {
-        if(!data.loggedIn) {
+        let loggedIn = await user.init();
+        console.log($user);
+        if(!loggedIn) {
             goto('/');
         }
         let userId = $user.$id;

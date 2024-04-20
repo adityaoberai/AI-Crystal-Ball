@@ -8,15 +8,6 @@
     }
 </script>
 
-<svelte:head>
-    <title>AI Crystal Ball</title>
-    <meta name="description" content="Find you developer destiny!">
-    <meta name="og:image" content="https://aicrystalball.oberai.dev/api/og">
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:creator" content="@adityaoberai1" />
-    <meta property="twitter:image" content="https://aicrystalball.oberai.dev/api/og" />
-</svelte:head>
-
 <div class="mainContainer">
     <Night />
     <h1>AI Crystal Ball</h1>
