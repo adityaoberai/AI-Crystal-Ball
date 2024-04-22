@@ -35,6 +35,7 @@
 
     async function getFortune() {
         fortuneLoading = 'loading';
+        document.getElementById("ballClick").disabled = true;
         const fortuneRequest = await fetch('/api/fortune', {
 			method: 'POST',
 			headers: {
@@ -56,6 +57,7 @@
     function resetFortune() {
         fortune = '';
         fortuneLoading = '';
+        document.getElementById("ballClick").disabled = false;
     }
 
     function saveImage() {
@@ -118,7 +120,7 @@
         <div class="crystalball">
             {#if fortuneLoading === ''}
                 <img src={crystalball} alt="Crystal Ball">
-                <button class="ballbutton" on:click={getFortune}>Tap and reveal your destiny!</button>
+                <button id="ballClick" class="ballbutton" on:click={getFortune}>Tap here and reveal your destiny!</button>
             {:else if fortuneLoading === 'loading'}
                 <img class="ballglow" src={crystalball} alt="Crystal Ball">
                 <button class="ballbutton glow" on:click={getFortune}>Reading your future...</button>                
