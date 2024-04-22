@@ -1,6 +1,5 @@
 import { writable } from "svelte/store";
 import { account } from "./appwrite";
-import { goto } from "$app/navigation";
 
 const isBrowser = typeof window !== 'undefined';
 
@@ -8,8 +7,9 @@ const createUser = () => {
     const store = writable(null);
 
     async function init() {
-        try 
-            if(!isBrowser) return;
+        try {
+            let session = await getSession();
+            if(!session) throw new Error('No session found');
             store.set(await account.get());
             return true;
         } catch (error) {
@@ -26,8 +26,11 @@ const createUser = () => {
     }
 
     async function getSession() {
-        if(!isBrowser) return;
-        return await account.getSession('current')
+        try {
+            return await account.getSession('current');
+        } catch(err) {
+            return null;
+        }
     }
 
     return {
