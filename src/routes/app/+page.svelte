@@ -69,13 +69,17 @@
         });
     }
 
-    function shareTwitter() {
-        html2canvas(document.querySelector('.fortuneMessage')).then(async (canvas) => {
-            let destiny = await db.addDestiny(userData.username, fortune);
-            let url = `https://aicrystalball.oberai.dev/destiny/${destiny.$id}`;
-            let tweet = encodeURI(`Just discovered my developer destiny from the AI Crystal Ball! 🤩\n\n🔗 Check it out: ${url}\n\nBuilt with @appwrite X @openai 🧑‍💻`);
-            window.open(`https://twitter.com/intent/tweet?text=${tweet}`, '_blank');
-        });
+    async function shareTwitter() {
+        let destiny = await db.addDestiny(userData.username, fortune);
+        let url = `https://aicrystalball.oberai.dev/destiny/${destiny.$id}`;
+        let tweet = encodeURI(`Just discovered my developer destiny from the AI Crystal Ball! 🤩\n\n🔗 Check it out: ${url}\n\nBuilt with @appwrite X @openai 🧑‍💻`);
+        window.open(`https://twitter.com/intent/tweet?text=${tweet}`, '_blank');
+    }
+
+    async function getLink() {
+        let destiny = await db.addDestiny(userData.username, fortune);
+        let url = `https://aicrystalball.oberai.dev/destiny/${destiny.$id}`;
+        window.open(url, '_blank');        
     }
 
     async function initCrystalBall(userId) {
@@ -134,6 +138,7 @@
                     </div>
                     <div class="fortuneButtons">
                         <button class="saveButton" on:click={saveImage}>Save Image</button>
+                        <button class="copyButton" on:click={getLink}>Get Link to Destiny</button>
                         <button class="twitterButton" on:click={shareTwitter}>Share on Twitter</button>
                         <button class="resetButton" on:click={resetFortune}>Want a new fortune?</button>
                     </div>
