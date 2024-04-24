@@ -1,12 +1,17 @@
-import { Permission, Role, ID } from "appwrite";
+import { Permission, Role, ID } from 'appwrite';
 import { databases } from "./appwrite";
+import { env } from '$env/dynamic/public';
+
+const databaseId = env.PUBLIC_APPWRITE_DATABASE_ID;
+const githubDataCollectionId = env.PUBLIC_APPWRITE_COLLECTION_ID_GITHUBDATA;
+const destinyCollectionId = env.PUBLIC_APPWRITE_COLLECTION_ID_DESTINY;
 
 export const db = {
     getUserData: async(documentId) => {
         try{
             return await databases.getDocument(
-                "crystalball",
-                "githubData",
+                databaseId,
+                githubDataCollectionId,
                 documentId
             );
         } catch(err){
@@ -16,8 +21,8 @@ export const db = {
 
     addUserData: async(userId, username, followers, following, languages) => {
         return await databases.createDocument(
-            "crystalball",
-            "githubData",
+            databaseId,
+            githubDataCollectionId,
             userId,
             {
                 username,
@@ -33,8 +38,8 @@ export const db = {
 
     addDestiny: async(username, destiny) => {
         return await databases.createDocument(
-            'crystalball',
-            'destiny',
+            databaseId,
+            destinyCollectionId,
             ID.unique(),
             {
                 username,
@@ -46,8 +51,8 @@ export const db = {
     getDestiny: async(documentId) => {
         try{
             return await databases.getDocument(
-                'crystalball',
-                'destiny',
+                databaseId,
+                destinyCollectionId,
                 documentId
             );
         } catch(err){
