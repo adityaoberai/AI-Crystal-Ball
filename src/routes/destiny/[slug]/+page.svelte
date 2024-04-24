@@ -35,3 +35,9 @@
         </div>
     </div>
 </div>
+
+<style>
+    p {
+        white-space: pre-line;
+    }
+</style>
