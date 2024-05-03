@@ -1,10 +1,10 @@
 <script>
     export let data;
 
-    let fortune = data.destiny.destiny;
+    let destiny = data.destiny.destiny;
     let username = data.destiny.username;
 
-    let ogImageUrl = `https://aicrystalball.oberai.dev/api/og/?username=${username}&destiny=${fortune}`;
+    let ogImageUrl = `https://aicrystalball.oberai.dev/api/og/?username=${username}&destiny=${destiny}`;
 
     function discoverDestiny() {
         window.open('https://aicrystalball.oberai.dev', '_self');
@@ -23,14 +23,14 @@
 </svelte:head>
 
 <div class="mainContainer">
-    <div class="fortune">
-        <div class="fortuneMessage">
+    <div class="destiny">
+        <div class="destinyMessage">
             <h1>{username}'s Destiny</h1>
-            <div class="fortuneMessageBox">
-                <p>{fortune}</p>
+            <div class="destinyMessageBox">
+                <p>{destiny}</p>
             </div>
         </div>
-        <div class="fortuneButtons">
+        <div class="destinyButtons">
             <button on:click={discoverDestiny}>Discover your developer destiny!</button>
         </div>
     </div>

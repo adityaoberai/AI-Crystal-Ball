@@ -7,10 +7,10 @@
     import html2canvas from 'html2canvas';
     import crystalball from '$lib/assets/crystalball.png';
 
-    let fortune = '';
+    let destiny = '';
     let loadingMessage = 'Fetching GitHub data...';
     let githubLoading = true;
-    let fortuneLoading = '';
+    let destinyLoading = '';
     let userData = {};
 
     async function getTopFiveLanguages(username, token) {
@@ -33,10 +33,10 @@
         return Object.entries(languageUsage).sort((a, b) => b[1] - a[1]).slice(0, 5).map(a => a[0]);
     }
 
-    async function getFortune() {
-        fortuneLoading = 'loading';
+    async function getDestiny() {
+        destinyLoading = 'loading';
         document.getElementById("ballClick").disabled = true;
-        const fortuneRequest = await fetch('/api/fortune', {
+        const destinyRequest = await fetch('/api/destiny', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json'
@@ -45,40 +45,40 @@
 				userData
 			})
 		})
-        fortuneLoading = 'complete';
-        let fortuneRequestBody = await fortuneRequest.json();
-        if(fortuneRequest.status == 200){
-            fortune += `${fortuneRequestBody.fortune}`;
+        destinyLoading = 'complete';
+        let destinyRequestBody = await destinyRequest.json();
+        if(destinyRequest.status == 200){
+            destiny += `${destinyRequestBody.destiny}`;
         } else {
-            fortune += `Error occured:\n\n${fortuneRequestBody.error}`;
+            destiny += `Error occured:\n\n${destinyRequestBody.error}`;
         }
     }
 
-    function resetFortune() {
-        fortune = '';
-        fortuneLoading = '';
+    function resetDestiny() {
+        destiny = '';
+        destinyLoading = '';
         document.getElementById("ballClick").disabled = false;
     }
 
     function saveImage() {
-        html2canvas(document.querySelector('.fortuneMessage')).then(canvas => {
+        html2canvas(document.querySelector('.destinyMessage')).then(canvas => {
             let link = document.createElement('a');
-            link.download = 'fortune.png';
+            link.download = 'destiny.png';
             link.href = canvas.toDataURL('image/png');
             link.click();
         });
     }
 
     async function shareTwitter() {
-        let destiny = await db.addDestiny(userData.username, fortune);
-        let url = `https://aicrystalball.oberai.dev/destiny/${destiny.$id}`;
+        let destinyToSave = await db.addDestiny(userData.username, destiny);
+        let url = `https://aicrystalball.oberai.dev/destiny/${destinyToSave.$id}`;
         let tweet = encodeURI(`Just discovered my developer destiny from the AI Crystal Ball! 🤩\n\n🔗 Check it out: ${url}\n\nBuilt with @appwrite X @openai 🧑‍💻`);
         window.open(`https://twitter.com/intent/tweet?text=${tweet}`, '_blank');
     }
 
     async function getLink() {
-        let destiny = await db.addDestiny(userData.username, fortune);
-        let url = `https://aicrystalball.oberai.dev/destiny/${destiny.$id}`;
+        let destinyToSave = await db.addDestiny(userData.username, destiny);
+        let url = `https://aicrystalball.oberai.dev/destiny/${destinyToSave.$id}`;
         window.open(url, '_blank');        
     }
 
@@ -122,25 +122,25 @@
 {:else}
     <div class="crystalballContainer mainContainer">
         <div class="crystalball">
-            {#if fortuneLoading === ''}
+            {#if destinyLoading === ''}
                 <img src={crystalball} alt="Crystal Ball">
-                <button id="ballClick" class="ballbutton" on:click={getFortune}>Tap here and reveal your destiny!</button>
-            {:else if fortuneLoading === 'loading'}
+                <button id="ballClick" class="ballbutton" on:click={getDestiny}>Tap here and reveal your destiny!</button>
+            {:else if destinyLoading === 'loading'}
                 <img class="ballglow" src={crystalball} alt="Crystal Ball">
-                <button class="ballbutton glow" on:click={getFortune}>Reading your future...</button>                
-            {:else if fortuneLoading === 'complete'}
-                <div class="fortune">
-                    <div class="fortuneMessage">
+                <button class="ballbutton glow" on:click={getDestiny}>Reading your future...</button>                
+            {:else if destinyLoading === 'complete'}
+                <div class="destiny">
+                    <div class="destinyMessage">
                         <h1>Five Years from Today</h1>
-                        <div class="fortuneMessageBox">
-                            <p>{fortune}</p>
+                        <div class="destinyMessageBox">
+                            <p>{destiny}</p>
                         </div>
                     </div>
-                    <div class="fortuneButtons">
+                    <div class="destinyButtons">
                         <button class="saveButton" on:click={saveImage}>Save Image</button>
                         <button class="copyButton" on:click={getLink}>Get Link to Destiny</button>
                         <button class="twitterButton" on:click={shareTwitter}>Share on Twitter</button>
-                        <button class="resetButton" on:click={resetFortune}>Want a new fortune?</button>
+                        <button class="resetButton" on:click={resetDestiny}>Want a new destiny?</button>
                     </div>
                 </div>
             {/if}
